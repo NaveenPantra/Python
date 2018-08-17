@@ -6,3 +6,6 @@ Python programming.
 #### 2. Dynamic Programming in (.py, .js, .c)languages
 #### 3. requests module implementation in .py
 #### 4. webScraping using requets, BeautifulSoup and scrapy
+
+
+Note: Other proects will be  added...
