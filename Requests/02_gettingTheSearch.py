@@ -1,7 +1,7 @@
 import requests as request
 
 
-def getRequest(url, params):
+def getRequest(url, params=None):
     # print(f"Getting request from: {url}?q={params['?q=']}")
     req = request.get(url, params)
     if req.status_code == 200:
@@ -15,9 +15,9 @@ def getRequest(url, params):
         print(f"Cannot get the request...")
 
 
-adder = f"https://www.bing.com/search"
+adder = f"https://www.google.com/search"
 search = input("Enter the search term: ")
 payload = {
-    "q=": search
+    "q": search
 }
 getRequest(adder, payload)
