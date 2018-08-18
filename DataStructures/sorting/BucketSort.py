@@ -20,13 +20,15 @@ class BucketSort(object):
         
     def insertEle(self, ele):
         pos = int(round(ele))
-        print(f"Current Element: {ele} @ Position: {pos}")
+        print("Current Element: ",ele," @ Position:",pos)
+        print("length of the current temp array is :", len(self.temp[pos]))
+        print("current elements are: ", self.temp[pos])
         flag = 0
         for index in range(1, len(self.temp[pos])):
             flag = 1
             if self.temp[pos][index] > ele:
                 self.temp[pos].insert(index, ele)
-                print(f"current temp: {self.temp[pos]}")
+                print("current temp:", self.temp[pos])
                 break     
         if flag == 0:
             self.temp[pos].append(ele)
@@ -44,7 +46,9 @@ class BucketSort(object):
                 maxi = nums[index - 1]
                 break
         for index in range(0, len(self.arr)):
+            self.arr[index] *= 1.0
             self.arr[index] /= maxi
+            print("Element: ", self.arr[index])
         for num in self.arr:
             self.insertEle(num)
         print(self.temp)
