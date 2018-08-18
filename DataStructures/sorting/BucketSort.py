@@ -1,5 +1,3 @@
-
-
 class Head(object):
     def __init__(self, node = None, value = 0):
         self.node = node
@@ -16,6 +14,7 @@ class BucketSort(object):
         self.arr = arr
     
     def sort(self):
+        # Find the maximum element in the entire array
+        # By finding the maximum element in the array the find the next immidiate 100, 1000, 10000, 100000, 1000000...
         maxi = max(self.arr)
-            
         
