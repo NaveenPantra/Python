@@ -20,6 +20,6 @@ class StringCount(object):
         return self.count, self.s
 
 
-strCount = StringCount("abcdee")
+strCount = StringCount("abcdelsadkjfowiqeuropiwqurzwuyeiuqweyoirurtpqcvbklasdjfhioweryoqiweuryrnbmvcnbzxmcnvbajkhgeriytqowieuryoiquwyralskjdhfzmcnvbmz,nvbjhgasdfpqeurpqweroiuweryoiuytiudhfajshfmnbcvzmcxbzmcnbalkdjheoeyrtqutrjhgafeasdfasdfasddsfdfgsdgrteeytyerytrtyiuyityiubncvbncvbbmcmdfsgagagdfggkl")
 count, s = strCount.getCount()
-print(f"{sorted(s)}")
+print(f"{count}")
