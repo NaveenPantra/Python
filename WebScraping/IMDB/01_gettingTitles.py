@@ -28,6 +28,25 @@ class GetTitles(object):
         self.params = {
             f"q": title,
         }
+        self.result = {}
+        self.movie = {
+            "rating": {
+                "ratingValue": 0,
+                "ratingTotal": 0,
+                "votesTotal": 0,
+                "critics": 0,
+            },
+            "genre": [],
+            "duration": "",
+            "release": "",
+            "storyLine": "",
+            "crew": {
+                "director": [],
+                "writer": [],
+                "stars": [],
+            },
+            "awards": "",
+        }
         self.getPage()
 
     def getPage(self):
@@ -40,9 +59,50 @@ class GetTitles(object):
         link = 0
         for row in range(len(resultCount) - 1):
             self.imageLinks.append(soup.select(self.titleResultTerms['titleTable'])[0].select('img')[row]['src'])
-            self.movieLinks.append(f"{self.url}{soup.select(self.titleResultTerms['titleTable'])[0].select('a')[link]['href']}")
+            self.movieLinks.append(
+                f"{self.url}{soup.select(self.titleResultTerms['titleTable'])[0].select('a')[link]['href']}")
             link += 2
-        print(f"Movie Links: {self.movieLinks}\nImage Links: {self.imageLinks}")
+        for movieUrl in self.movieLinks:
+            self.getMovieDetails(movieUrl)
+
+    def getMovieDetails(self, movieUrl):
+        res = request.get(movieUrl)
+        soup = bs(res.text, 'lxml')
+
+        # Get Rating
+        self.movie['rating']['ratingValue'] = soup.select('.imdbRating span')[0].string
+        self.movie['rating']['ratingTotal'] = soup.select('.imdbRating span')[2].string
+        self.movie['rating']['votesTotal'] = soup.select('.imdbRating span')[3].string
+        self.movie['rating']['critics'] = soup.select('.imdbRating span')[-1].string
+
+        # Movie Information
+        self.movie['duration'] = soup.select('.subtext time')[0].string.strip()
+        genre = soup.select('.subtext a')[:-1]
+        for type in genre:
+            
+        self.movie['release'] = soup.select('.subtext a')[-1].string.strip()
+        print(f"{self.movie}")
+
 
 
 getTitle = GetTitles("Dhoom")
+
+
+# self.movie = {
+#             "rating": {
+#                 "ratingValue": 0,
+#                 "ratingTotal": 0,
+#                 "votesTotal": 0,
+#                 "critics": 0,
+#             },
+#             "genre": [],
+#             "duration": "",
+#             "release": "",
+#             "storyLine": "",
+#             "crew": {
+#                 "director": [],
+#                 "writer": [],
+#                 "stars": [],
+#             },
+#             "awards": "",
+#         }
