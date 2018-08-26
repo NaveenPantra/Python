@@ -87,6 +87,7 @@ class GetTitles(object):
     @staticmethod
     def getMovieDetails(movieUrl):
         movie = {
+            "poster": "",
             "rating": {
                 "ratingValue": 0,
                 "ratingTotal": 0,
@@ -106,6 +107,12 @@ class GetTitles(object):
         }
         res = request.get(movieUrl)
         soup = bs(res.text, 'lxml')
+
+        # Poster
+        try:
+            movie["poster"] = soup.select('.poster img')[0]['src']
+        except:
+            pass
 
         # Get Rating
         try:
@@ -168,6 +175,7 @@ quan = input("Result Length (short/long) (s/l): ")
 getTitle = GetTitles(title, quan)
 
 # self.movie = {
+#             "poster": "Poster URL"
 #             "rating": {
 #                 "ratingValue": 0,
 #                 "ratingTotal": 0,
