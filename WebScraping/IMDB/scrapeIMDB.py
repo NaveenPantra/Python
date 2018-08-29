@@ -1,8 +1,7 @@
 import requests as request
 from bs4 import BeautifulSoup as bs
 import re
-from pymongo import MongoClient
-from pymongo import ASCENDING
+from pymongo import MongoClient, ASCENDING
 from pymongo.errors import DuplicateKeyError
 
 """
