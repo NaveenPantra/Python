@@ -28,13 +28,14 @@ class StoreTitles(object):
         self.db.titles.create_index([('movie_id', ASCENDING)], unique=True)
 
     def insertDocument(self, docs):
-        print(len(docs))
+        # print(len(docs))
         for doc in docs:
             try:
                 self.titles.insert(doc)
             except DuplicateKeyError:
-                print(f"{doc} is already in DB")
-                print(f"{self.titles.find({'movie_id': doc['movie_id']})}")
+                pass
+                # print(f"{doc} is already in DB")
+                # print(f"{self.titles.find({'movie_id': doc['movie_id']})}")
 
 
 class GetTitles(object):
@@ -42,19 +43,19 @@ class GetTitles(object):
     def __init__(self, title, quan):
         self.db = StoreTitles()
         self.title = title
-        self.url = f"https://www.imdb.com"
+        self.url = "https://www.imdb.com"
         self.titleResultTerms = {
-            f"titleTable": f".findList",
-            f"link": 'a',
+            "titleTable": ".findList",
+            "link": 'a',
         }
         self.imageLinks = []
         self.movieLinks = []
         self.paramsL = {
-            f"q": title,
-            f"s": f"tt",
+            "q": title,
+            "s": "tt",
         }
         self.paramsS = {
-            f"q": title,
+            "q": title,
         }
         # self.result = {}
         self.result = []
@@ -66,7 +67,7 @@ class GetTitles(object):
     # https://www.imdb.com/find?q=...
     def getPage(self, params):
         res = request.get(f"{self.url}/find", params)
-        print(f"Page URL: {res.url}")
+        # print(f"Page URL: {res.url}")
         soup = bs(res.text, 'lxml')
 
         # Get Result Title names
@@ -81,7 +82,7 @@ class GetTitles(object):
         titleNames = []
         for title in titleLinks:
             titleNames.append(title.select('a')[0].string.replace(':', " "))
-        print(titleNames)
+        # print(titleNames)
 
         # soup.select(self.titleResultTerms['titleTable'])[0].select('img')[0]['src']
         resultCount = soup.select(self.titleResultTerms['titleTable'])[0]
@@ -91,11 +92,11 @@ class GetTitles(object):
             self.movieLinks.append(
                 f"{self.url}{soup.select(self.titleResultTerms['titleTable'])[0].select('a')[link]['href']}")
             link += 2
-        print(f"Movies found: {len(self.movieLinks)}: {self.movieLinks}")
+        # print(f"Movies found: {len(self.movieLinks)}: {self.movieLinks}")
         index = 0
         for movieUrl in self.movieLinks:
             movie = self.getMovieDetails(movieUrl, titleNames[index])
-            print(f"{movieUrl}: {movie}")
+            # print(f"{movieUrl}: {movie}")
             self.addResult(titleNames[index], movie)
             index += 1
         # print(self.result)
